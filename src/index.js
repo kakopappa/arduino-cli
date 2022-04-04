@@ -95,11 +95,13 @@ const ArduinoCli = (pathToBin, config = null) => {
     listInstalledBoards: () => listBoardsWith('listall', R.prop('boards')),
     listAvailableBoards: () =>
       listAvailableBoards(getConfig, cfg.directories.data),
-    compile: (onProgress, fqbn, sketchName, verbose = false) =>
+    compile: (onProgress, fqbn, sketchName, outputDir, verbose = false,) =>
       runWithProgress(onProgress, [
         'compile',
         `--fqbn=${fqbn}`,
+        outputDir ? `--output-dir=${outputDir}` : '',
         verbose ? '--verbose' : '',
+
         sketch(sketchName),
       ]),
     upload: (onProgress, port, fqbn, sketchName, verbose = false) =>
